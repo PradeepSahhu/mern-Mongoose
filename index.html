@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <label>Upload your image from below</label>
+      <input id="imageUploader" type="file" onchange="showConsole();" />
+      <div id="imgTest"></div>
+    </div>
+
+    <script>
+      function showConsole() {
+        var filesUploaded = document.getElementById("imageUploader");
+        console.log(filesUploaded.files[0]);
+
+        var fileReader = new FileReader();
+
+        fileReader.onload = function (loadEvent) {
+          console.log("The log is : " + loadEvent.target.result);
+ 
