@@ -21,4 +21,19 @@
 
         fileReader.onload = function (loadEvent) {
           console.log("The log is : " + loadEvent.target.result);
- 
+          var srcData = loadEvent.target.result; // <--- data: base64
+
+          var newImage = document.createElement("img");
+          newImage.src = srcData;
+          newImage.width = 400;
+          newImage.height = 400;
+
+          let divElement = document.getElementById("imgTest");
+          divElement.innerHTML = "";
+          divElement.appendChild(newImage);
+        };
+        fileReader.readAsDataURL(filesUploaded.files[0]);
+      }
+    </script>
+  </body>
+</html>
