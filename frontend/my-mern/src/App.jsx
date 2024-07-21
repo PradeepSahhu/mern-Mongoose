@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import "./App.css";
 // import * as connectDB from "../../../backend/MongoDB/connection.database";
 // import * as imageModel from "../../../backend/Model/image.model";
-import connectDB from "./connect.db";
-import imageModel from "./image.model";
+// import connectDB from "./connect.db";
+// import imageModel from "./image.model";
+import imageCompression from "browser-image-compression";
 
 function App() {
   const [imageInfo, setImageInfo] = useState();
@@ -13,11 +14,21 @@ function App() {
 
   const [base64, setBase64] = useState(undefined);
 
-  function showConsole() {
+  async function showConsole() {
     var filesUploaded = document.getElementById("imageUploader");
     console.log(filesUploaded.files[0]);
 
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 800,
+      useWebWorker: true,
+    };
+
     var fileReader = new FileReader();
+    const compressedImage = await imageCompression(
+      filesUploaded.files[0],
+      options
+    );
 
     fileReader.onload = function (loadEvent) {
       console.log("The log is : " + loadEvent.target.result);
@@ -34,7 +45,7 @@ function App() {
       divElement.innerHTML = "";
       divElement.appendChild(newImage);
     };
-    fileReader.readAsDataURL(filesUploaded.files[0]);
+    fileReader.readAsDataURL(compressedImage);
   }
 
   const fetData = async () => {
